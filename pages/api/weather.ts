@@ -27,7 +27,6 @@ async function fetchWeatherData(): Promise<WeatherDataType> {
     throw new Error(`Forecast API Error: ${forecastData.message}`);
   }
 
-  // https://openweathermap.org/weather-conditions for icon codes
   const cachedWeatherData: WeatherDataType = {
     current: {
       city: NEXT_PUBLIC_CITY || "N/A",
