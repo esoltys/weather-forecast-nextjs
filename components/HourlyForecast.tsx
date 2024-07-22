@@ -3,7 +3,7 @@ import * as echarts from "echarts";
 import { HourlyForecastType } from "@/types/weather";
 
 function HourlyForecast({ data }: { data: HourlyForecastType[] }) {
-  const chartRef = useRef(null);
+  const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (chartRef.current && data) {
@@ -20,7 +20,7 @@ function HourlyForecast({ data }: { data: HourlyForecastType[] }) {
 
         const chart = echarts.init(chartRef.current);
 
-        const options = {
+        const options: echarts.EChartOption = {
           tooltip: {
             trigger: "axis",
             formatter: function (params) {
