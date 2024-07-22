@@ -6,6 +6,8 @@ const NEXT_PUBLIC_CITY = process.env.NEXT_PUBLIC_CITY;
 const NEXT_PUBLIC_COUNTRY_CODE = process.env.NEXT_PUBLIC_COUNTRY_CODE;
 const NEXT_PUBLIC_API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
+const DEFAULT_ICON_CODE = "01d"; // https://openweathermap.org/weather-conditions
+
 async function fetchWeatherData(): Promise<WeatherDataType> {
   const currentWeatherResponse = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${NEXT_PUBLIC_CITY},${NEXT_PUBLIC_COUNTRY_CODE}&appid=${NEXT_PUBLIC_API_KEY}&units=metric`
@@ -25,6 +27,7 @@ async function fetchWeatherData(): Promise<WeatherDataType> {
     throw new Error(`Forecast API Error: ${forecastData.message}`);
   }
 
+  // https://openweathermap.org/weather-conditions for icon codes
   const cachedWeatherData: WeatherDataType = {
     current: {
       city: NEXT_PUBLIC_CITY || "N/A",
@@ -36,7 +39,7 @@ async function fetchWeatherData(): Promise<WeatherDataType> {
       wind_direction: currentWeather.wind.deg,
       pressure: currentWeather.main.pressure,
       description: currentWeather.weather[0]?.description || "N/A",
-      icon: currentWeather.weather[0]?.icon || "01d",
+      icon: currentWeather.weather[0]?.icon || DEFAULT_ICON_CODE,
       sunrise: currentWeather.sys.sunrise * 1000,
       sunset: currentWeather.sys.sunset * 1000,
     },
@@ -44,7 +47,7 @@ async function fetchWeatherData(): Promise<WeatherDataType> {
       time: new Date(item.dt * 1000).toISOString(),
       temp: item.main.temp,
       pop: item.pop,
-      icon: item.weather[0]?.icon || "01d",
+      icon: item.weather[0]?.icon || DEFAULT_ICON_CODE,
     })),
     daily: processDailyForecast(forecastData.list),
   };
@@ -62,7 +65,7 @@ function processDailyForecast(forecastList: any[]): DailyForecastType[] {
         date: new Date(item.dt * 1000).toISOString(),
         temp_min: item.main.temp_min,
         temp_max: item.main.temp_max,
-        icon: item.weather[0]?.icon || "01d",
+        icon: item.weather[0]?.icon || DEFAULT_ICON_CODE,
         description: item.weather[0]?.description || "N/A",
       };
     } else {
