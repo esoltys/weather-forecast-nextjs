@@ -1,5 +1,5 @@
 import React from "react";
-import { getTemperatureColor, getContrastColor } from "../utils/utils";
+import { getTemperatureColor } from "../utils/utils";
 import { DailyForecastType } from "@/types/weather";
 import Image from "next/image";
 
@@ -18,7 +18,7 @@ function DailyForecast({ data }: { data: DailyForecastType }) {
         {data.map((day) => {
           const avgTemp = (day.temp_max + day.temp_min) / 2;
           const bgColor = getTemperatureColor(avgTemp);
-          const textColor = getContrastColor(bgColor);
+          const textColor = "#000000";
           return (
             <tr
               key={day.date}
