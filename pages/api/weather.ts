@@ -1,10 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import { WeatherDataType, DailyForecastType } from "@/types/weather";
+
 const NEXT_PUBLIC_CITY = process.env.NEXT_PUBLIC_CITY;
 const NEXT_PUBLIC_COUNTRY_CODE = process.env.NEXT_PUBLIC_COUNTRY_CODE;
 const NEXT_PUBLIC_API_KEY = process.env.NEXT_PUBLIC_API_KEY;
 
-async function fetchWeatherData() {
+async function fetchWeatherData(): Promise<WeatherDataType> {
   const currentWeatherResponse = await fetch(
     `https://api.openweathermap.org/data/2.5/weather?q=${NEXT_PUBLIC_CITY},${NEXT_PUBLIC_COUNTRY_CODE}&appid=${NEXT_PUBLIC_API_KEY}&units=metric`
   );
@@ -23,10 +25,10 @@ async function fetchWeatherData() {
     throw new Error(`Forecast API Error: ${forecastData.message}`);
   }
 
-  const cachedWeatherData = {
+  const cachedWeatherData: WeatherDataType = {
     current: {
-      city: NEXT_PUBLIC_CITY,
-      country: NEXT_PUBLIC_COUNTRY_CODE,
+      city: NEXT_PUBLIC_CITY || "N/A",
+      country: NEXT_PUBLIC_COUNTRY_CODE || "N/A",
       temp: currentWeather.main.temp,
       feels_like: currentWeather.main.feels_like,
       humidity: currentWeather.main.humidity,
@@ -50,8 +52,8 @@ async function fetchWeatherData() {
   return cachedWeatherData;
 }
 
-function processDailyForecast(forecastList: any[]): any[] {
-  const dailyData: { [key: string]: any } = {};
+function processDailyForecast(forecastList: any[]): DailyForecastType[] {
+  const dailyData: { [key: string]: DailyForecastType } = {};
 
   forecastList.forEach((item: any) => {
     const date = new Date(item.dt * 1000).toLocaleDateString();

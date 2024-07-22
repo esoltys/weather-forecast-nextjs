@@ -1,7 +1,9 @@
-import React from 'react';
-import { getTemperatureColor, getContrastColor } from '../utils/utils';
+import React from "react";
+import { getTemperatureColor, getContrastColor } from "../utils/utils";
+import { DailyForecastType } from "@/types/weather";
+import Image from "next/image";
 
-function DailyForecast({ data }) {
+function DailyForecast({ data }: { data: DailyForecastType }) {
   return (
     <table className="w-full table-auto border-collapse">
       <thead>
@@ -18,7 +20,10 @@ function DailyForecast({ data }) {
           const bgColor = getTemperatureColor(avgTemp);
           const textColor = getContrastColor(bgColor);
           return (
-            <tr key={day.date} style={{ backgroundColor: `${bgColor}20`, color: textColor }}>
+            <tr
+              key={day.date}
+              style={{ backgroundColor: `${bgColor}20`, color: textColor }}
+            >
               <td className="border px-4 py-2">
                 {new Date(day.date).toLocaleDateString([], {
                   weekday: "short",
@@ -27,11 +32,13 @@ function DailyForecast({ data }) {
                 })}
               </td>
               <td className="border px-4 py-2 flex items-center">
-                <img 
-                  src={`https://openweathermap.org/img/wn/${day.icon}.png`} 
-                  alt={day.description} 
-                  className="weather-icon mr-2" 
+                <Image
+                  src={`https://openweathermap.org/img/wn/${day.icon}.png`}
+                  alt={day.description}
+                  className="weather-icon mr-2"
                   aria-label={`Weather icon: ${day.description}`}
+                  width={32}
+                  height={32}
                 />
                 {day.description}
               </td>

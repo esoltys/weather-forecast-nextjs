@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from "react";
 import * as echarts from "echarts";
+import { HourlyForecastType } from "@/types/weather";
 
-function dataForecast({ data }) {
+function HourlyForecast({ data }: { data: HourlyForecastType[] }) {
   const chartRef = useRef(null);
 
   useEffect(() => {
@@ -128,4 +129,4 @@ function dataForecast({ data }) {
   return <div ref={chartRef} style={{ width: "100%", height: "400px" }} />;
 }
 
-export default dataForecast;
+export default HourlyForecast;

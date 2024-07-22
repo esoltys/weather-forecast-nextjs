@@ -1,13 +1,11 @@
-export interface WindDirection {
-  degrees: number;
-}
+import { WindDirectionType } from "@/types/weather";
 
-export function getWindDirection({ degrees }: WindDirection): string {
+export function getWindDirection({ degrees }: WindDirectionType): string {
   const directions: string[] = ["N", "NE", "E", "SE", "S", "SW", "W", "NW"];
   return directions[Math.round(degrees / 45) % 8];
 }
 
-export function getWindDirectionArrow({ degrees }: WindDirection) {
+export function getWindDirectionArrow({ degrees }: WindDirectionType): string {
   const arrows = ["↑", "↗", "→", "↘", "↓", "↙", "←", "↖"];
   return arrows[Math.round(degrees / 45) % 8];
 }

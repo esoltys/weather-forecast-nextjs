@@ -1,21 +1,27 @@
-'use client'
+"use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import CurrentWeather from "../components/CurrentWeather";
 import HourlyForecast from "../components/HourlyForecast";
 import DailyForecast from "../components/DailyForecast";
+import {
+  WeatherDataType,
+  CurrentWeatherType,
+  HourlyForecastType,
+  DailyForecastType,
+} from "@/types/weather";
 
 export default function Home() {
-  const [weatherData, setWeatherData] = useState(null);
+  const [weatherData, setWeatherData] = useState<WeatherDataType | null>(null);
 
   useEffect(() => {
-    fetch('/api/weather')
+    fetch("/api/weather")
       .then((response) => response.json())
-      .then((data) => {
+      .then((data: WeatherDataType) => {
         setWeatherData(data);
       })
       .catch((error) => {
-        console.error('Error fetching weather data:', error);
+        console.error("Error fetching weather data:", error);
       });
   }, []);
 
@@ -23,9 +29,9 @@ export default function Home() {
 
   return (
     <main className="container">
-      <CurrentWeather data={weatherData.current} />
-      <HourlyForecast data={weatherData.hourly} />
-      <DailyForecast data={weatherData.daily} />
+      <CurrentWeather data={weatherData.current as CurrentWeatherType} />
+      <HourlyForecast data={weatherData.hourly as HourlyForecastType[]} />
+      <DailyForecast data={weatherData.daily as DailyForecastType[]} />
     </main>
   );
 }
