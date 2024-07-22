@@ -3,52 +3,49 @@ import { getTemperatureColor } from "../utils/utils";
 import { DailyForecastType } from "@/types/weather";
 import Image from "next/image";
 
-function DailyForecast({ data }: { data: DailyForecastType }) {
+function DailyForecast({ data }: { data: DailyForecastType[] }) {
   return (
-    <table className="w-full table-auto border-collapse">
-      <thead>
-        <tr className="bg-gray-200">
-          <th className="px-4 py-2 text-left">Date</th>
-          <th className="px-4 py-2 text-left">Conditions</th>
-          <th className="px-4 py-2 text-left">Max</th>
-          <th className="px-4 py-2 text-left">Min</th>
-        </tr>
-      </thead>
-      <tbody>
-        {data.map((day) => {
-          const avgTemp = (day.temp_max + day.temp_min) / 2;
-          const bgColor = getTemperatureColor(avgTemp);
-          const textColor = "#000000";
-          return (
-            <tr
-              key={day.date}
-              style={{ backgroundColor: `${bgColor}20`, color: textColor }}
-            >
-              <td className="border px-4 py-2">
-                {new Date(day.date).toLocaleDateString([], {
-                  weekday: "short",
-                  month: "short",
-                  day: "numeric",
-                })}
-              </td>
-              <td className="border px-4 py-2 flex items-center">
-                <Image
-                  src={`https://openweathermap.org/img/wn/${day.icon}.png`}
-                  alt={day.description}
-                  className="weather-icon mr-2"
-                  aria-label={`Weather icon: ${day.description}`}
-                  width={32}
-                  height={32}
-                />
-                {day.description}
-              </td>
-              <td className="border px-4 py-2">{day.temp_max.toFixed(1)}°C</td>
-              <td className="border px-4 py-2">{day.temp_min.toFixed(1)}°C</td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <div className="w-full">
+      <div className="flex bg-gray-200 p-2 font-bold">
+        <div className="w-1/3 px-2">Date</div>
+        <div className="w-1/3 px-2">Conditions</div>
+        <div className="w-1/6 px-2">Max</div>
+        <div className="w-1/6 px-2">Min</div>
+      </div>
+      {data.map((day) => {
+        const avgTemp = (day.temp_max + day.temp_min) / 2;
+        const bgColor = getTemperatureColor(avgTemp);
+        const textColor = "#000000";
+        return (
+          <div
+            key={day.date}
+            className="flex p-2"
+            style={{ backgroundColor: `${bgColor}20`, color: textColor }}
+          >
+            <div className="w-1/3 px-2">
+              {new Date(day.date).toLocaleDateString([], {
+                weekday: "short",
+                month: "short",
+                day: "numeric",
+              })}
+            </div>
+            <div className="w-1/3 px-2 flex items-center">
+              <Image
+                src={`https://openweathermap.org/img/wn/${day.icon}.png`}
+                alt={day.description}
+                className="weather-icon mr-2"
+                aria-label={`Weather icon: ${day.description}`}
+                width={32}
+                height={32}
+              />
+              {day.description}
+            </div>
+            <div className="w-1/6 px-2">{day.temp_max.toFixed(1)}°C</div>
+            <div className="w-1/6 px-2">{day.temp_min.toFixed(1)}°C</div>
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
