@@ -13,7 +13,7 @@ function CurrentWeather({ data }: { data: CurrentWeatherType }) {
   });
 
   return (
-    <div className="current-weather">
+    <div>
       <h1 className="text-3xl font-bold text-gray-800 mb-4">{`${data.city}, ${data.country}`}</h1>
       <h2 className="text-2xl font-semibold text-gray-700 mb-2 flex items-center">
         <img

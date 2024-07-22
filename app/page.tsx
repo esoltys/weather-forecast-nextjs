@@ -28,7 +28,7 @@ export default function Home() {
   if (!weatherData) return <div>Loading...</div>;
 
   return (
-    <main className="container">
+    <main className="max-w-5xl mx-auto bg-white p-5 m-5 rounded-lg shadow-md">
       <CurrentWeather data={weatherData.current as CurrentWeatherType} />
       <HourlyForecast data={weatherData.hourly as HourlyForecastType[]} />
       <DailyForecast data={weatherData.daily as DailyForecastType[]} />
