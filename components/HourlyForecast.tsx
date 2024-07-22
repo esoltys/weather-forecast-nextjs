@@ -33,7 +33,7 @@ function HourlyForecast({ data }: { data: HourlyForecastType[] }) {
               return `
                     <div style="text-align: center;">
                         <strong>${timeStr}</strong><br>
-                        <img src="https://openweathermap.org/img/wn/${icon}.png" style="width:50px;height:50px;"><br>
+                        <img src="https://openweathermap.org/img/wn/${icon}.png" class="weather-icon" style="width:50px;height:50px;"><br>
                         Temperature: ${temp}°C<br>
                         Precipitation: ${precip}%
                     </div>
