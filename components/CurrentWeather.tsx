@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import { getWindDirection, getWindDirectionArrow } from "../utils/utils";
 import { CurrentWeatherType } from "@/types/weather";
 
@@ -16,11 +17,13 @@ function CurrentWeather({ data }: { data: CurrentWeatherType }) {
     <div>
       <h1 className="text-3xl font-bold text-gray-800 mb-4">{`${data.city}, ${data.country}`}</h1>
       <h2 className="text-2xl font-semibold text-gray-700 mb-2 flex items-center">
-        <img
+        <Image
           src={`https://openweathermap.org/img/wn/${data.icon}@2x.png`}
           alt={data.description}
           className="weather-icon"
           aria-label={`Weather icon: ${data.description}`}
+          width={64}
+          height={64}
         />
         {data.temp.toFixed(1)}°C
       </h2>
