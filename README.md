@@ -57,9 +57,55 @@ To run the server in development mode with automatic restarts on file changes, u
 bun dev
 ```
 
-## Contributing
+## Architecture
 
-This was just a quick experiment. If you find it useful, great, but it's not going to be maintained.
+```mermaid
+graph TB
+    User((User))
+
+    subgraph "Weather Forecast Application"
+        FrontendApp["Frontend Application<br/>(Next.js)"]
+
+        subgraph "Backend Services"
+            APIRoute["API Route<br/>(Next.js API)"]
+        end
+
+        subgraph "Shared Components"
+            CurrentWeather["CurrentWeather<br/>(React Component)"]
+            HourlyForecast["HourlyForecast<br/>(React Component)"]
+            DailyForecast["DailyForecast<br/>(React Component)"]
+            UtilityFunctions["Utility Functions"]
+            WeatherTypes["Weather Types"]
+        end
+    end
+
+    subgraph "External Services"
+        OpenWeatherAPI["OpenWeatherMap API<br/>(External Weather Data)"]
+    end
+
+    User --> FrontendApp
+    FrontendApp --> APIRoute
+    APIRoute --> OpenWeatherAPI
+
+    FrontendApp --> CurrentWeather
+    FrontendApp --> HourlyForecast
+    FrontendApp --> DailyForecast
+    FrontendApp --> UtilityFunctions
+    FrontendApp --> WeatherTypes
+
+    APIRoute --> UtilityFunctions
+    APIRoute --> WeatherTypes
+
+    classDef frontend fill:#1168bd,stroke:#0b4884,color:#ffffff
+    classDef backend fill:#2694ab,stroke:#1a6d7d,color:#ffffff
+    classDef external fill:#999999,stroke:#666666,color:#ffffff
+    classDef shared fill:#6b8e23,stroke:#556b2f,color:#ffffff
+
+    class FrontendApp frontend
+    class APIRoute backend
+    class OpenWeatherAPI external
+    class CurrentWeather,HourlyForecast,DailyForecast,UtilityFunctions,WeatherTypes shared
+```
 
 ## License
 
